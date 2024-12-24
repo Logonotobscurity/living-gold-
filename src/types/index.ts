@@ -28,6 +28,6 @@ export interface SocialLinks {
 export const socialLinks = {
   instagram: 'https://www.instagram.com/living.gold.global?igsh=aWF2ZHNoZjdtNXFz',
   facebook: '#',
-  whatsapp: 'https://wa.me/+1234567890',
-  email: 'mailto:info@livinggold.com'
+  whatsapp: 'https://wa.me/+2348033129388',
+  email: 'mailto:logooluwamayowa@protonmail.com'
 } as const; 

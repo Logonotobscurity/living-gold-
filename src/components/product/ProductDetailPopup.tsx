@@ -34,9 +34,13 @@ export const ProductDetailPopup = ({ product, onClose }: ProductDetailPopupProps
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
             <div className="aspect-square rounded-lg overflow-hidden">
               <img
-                src={product.imageUrl}
+                src={`/images/products/${product.imageUrl}`}
                 alt={product.name}
                 className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = '/images/products/placeholder.webp';
+                }}
               />
             </div>
 

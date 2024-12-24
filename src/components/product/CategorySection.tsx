@@ -13,16 +13,16 @@ export const CategorySection = ({ title, products }: CategorySectionProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="mb-8">
+    <div className="mb-6">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center justify-between p-3 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-colors"
       >
-        <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+        <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
         {isExpanded ? (
-          <ChevronUp className="w-6 h-6 text-gray-500" />
+          <ChevronUp className="w-5 h-5 text-gray-500" />
         ) : (
-          <ChevronDown className="w-6 h-6 text-gray-500" />
+          <ChevronDown className="w-5 h-5 text-gray-500" />
         )}
       </button>
 
@@ -35,12 +35,12 @@ export const CategorySection = ({ title, products }: CategorySectionProps) => {
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="grid grid-cols-2 gap-4 mt-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-3">
               {products.map((product) => (
                 <div key={product.id} className="w-full">
                   <ProductCard
                     product={product}
-                    className="h-[280px] sm:h-[320px]"
+                    className="h-[200px] sm:h-[240px] md:h-[280px]"
                   />
                 </div>
               ))}
