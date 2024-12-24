@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Truck, Shield, Clock, Phone, ArrowRight, Tag, ShoppingBag, Gift } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -65,32 +65,39 @@ const deals = [
 ];
 
 export const LandingPageSections = () => {
+  const [activeFeature, setActiveFeature] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveFeature((prev) => (prev + 1) % features.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="space-y-24">
       {/* Service Features */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-          >
+          <div className="relative h-[300px] sm:h-[250px]">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="flex flex-col items-center text-center p-6 bg-white rounded-xl border border-gold-400/20 hover:border-gold-400/50 shadow-lg hover:shadow-xl transition-all"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{
+                  opacity: activeFeature === index ? 1 : 0,
+                  x: activeFeature === index ? 0 : 50,
+                  pointerEvents: activeFeature === index ? 'auto' : 'none',
+                }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0 flex flex-col items-center text-center p-6 bg-white rounded-xl border border-gold-400/20 shadow-lg"
               >
-                <feature.icon className="w-10 h-10 text-gold-500 mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <feature.icon className="w-12 h-12 text-gold-500 mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
+                <p className="text-gray-600 max-w-md">{feature.description}</p>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -182,7 +189,7 @@ export const LandingPageSections = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white overflow-hidden">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -196,28 +203,38 @@ export const LandingPageSections = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={testimonial.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl border border-gold-500/20 shadow-lg hover:shadow-xl transition-all"
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-gold-500 fill-gold-500" />
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-4">{testimonial.comment}</p>
-                <div>
-                  <h4 className="text-gray-900 font-semibold">{testimonial.name}</h4>
-                  <p className="text-gray-600 text-sm">{testimonial.role}</p>
-                </div>
-              </motion.div>
-            ))}
+          <div className="relative">
+            <motion.div
+              animate={{
+                x: [0, -100 * testimonials.length],
+              }}
+              transition={{
+                x: {
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "linear",
+                },
+              }}
+              className="flex gap-6"
+            >
+              {[...testimonials, ...testimonials].map((testimonial, index) => (
+                <motion.div
+                  key={`${testimonial.name}-${index}`}
+                  className="flex-shrink-0 w-[300px] sm:w-[350px] p-6 bg-white rounded-xl border border-gold-400/20 shadow-lg"
+                >
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 text-gold-500 fill-gold-500" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 mb-4 line-clamp-3">{testimonial.comment}</p>
+                  <div>
+                    <h4 className="text-gray-900 font-semibold">{testimonial.name}</h4>
+                    <p className="text-gray-600 text-sm">{testimonial.role}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>

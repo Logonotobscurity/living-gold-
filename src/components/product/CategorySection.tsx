@@ -1,33 +1,53 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Product } from '../../types';
 import { ProductCard } from './ProductCard';
-import type { Product } from '../../types';
 
 interface CategorySectionProps {
   title: string;
   products: Product[];
 }
 
-export const CategorySection: React.FC<CategorySectionProps> = ({ title, products }) => {
+export const CategorySection = ({ title, products }: CategorySectionProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
-    <section className="py-12">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="text-gold-500 hover:text-gold-600 font-medium"
+    <div className="mb-8">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-colors"
+      >
+        <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
+        {isExpanded ? (
+          <ChevronUp className="w-6 h-6 text-gray-500" />
+        ) : (
+          <ChevronDown className="w-6 h-6 text-gray-500" />
+        )}
+      </button>
+
+      <AnimatePresence>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
           >
-            View All
-          </motion.button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {products.slice(0, 3).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </div>
-    </section>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              {products.map((product) => (
+                <div key={product.id} className="w-full">
+                  <ProductCard
+                    product={product}
+                    className="h-[280px] sm:h-[320px]"
+                  />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }; 
