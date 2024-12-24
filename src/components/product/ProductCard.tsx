@@ -42,6 +42,10 @@ export const ProductCard = ({ product, className = '' }: ProductCardProps) => {
     setIsWishlisted(!isWishlisted);
   };
 
+  const imagePath = product.imageUrl.startsWith('IMG_') 
+    ? `/images/products/${product.imageUrl}`
+    : product.imageUrl;
+
   return (
     <motion.div
       whileHover={{ y: -5 }}
@@ -49,12 +53,12 @@ export const ProductCard = ({ product, className = '' }: ProductCardProps) => {
     >
       <div className="aspect-square overflow-hidden relative">
         <img
-          src={`/images/products/${product.imageUrl.toUpperCase()}`}
+          src={imagePath}
           alt={product.name}
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
-            target.src = '/images/products/placeholder.WEBP';
+            target.src = '/images/products/IMG_1937.WEBP';
           }}
         />
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
@@ -101,9 +105,6 @@ export const ProductCard = ({ product, className = '' }: ProductCardProps) => {
       <div className="p-2 sm:p-3">
         <h3 className="text-xs sm:text-sm font-semibold text-gray-900 truncate">{product.name}</h3>
         <p className="text-xs text-gray-600 mt-0.5 line-clamp-2">{product.description}</p>
-        <div className="mt-1.5">
-          <span className="text-xs sm:text-sm font-bold text-gray-900">₦{product.price.toLocaleString()}</span>
-        </div>
       </div>
       {showDetails && <ProductDetailPopup product={product} onClose={() => setShowDetails(false)} />}
     </motion.div>

@@ -34,6 +34,10 @@ export const ProductDetailPopup = ({ product, onClose }: ProductDetailPopupProps
     }
   };
 
+  const imagePath = product.imageUrl.startsWith('IMG_') 
+    ? `/images/products/${product.imageUrl}`
+    : product.imageUrl;
+
   return (
     <AnimatePresence>
       <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -84,12 +88,12 @@ export const ProductDetailPopup = ({ product, onClose }: ProductDetailPopupProps
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
             <div className="aspect-square rounded-lg overflow-hidden">
               <img
-                src={`/images/products/${product.imageUrl.toUpperCase()}`}
+                src={imagePath}
                 alt={product.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = '/images/products/placeholder.WEBP';
+                  target.src = '/images/products/IMG_1937.WEBP';
                 }}
               />
             </div>
@@ -110,10 +114,7 @@ export const ProductDetailPopup = ({ product, onClose }: ProductDetailPopupProps
               </div>
 
               <div className="pt-4 border-t">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl font-bold text-gray-900">
-                    ₦{product.price.toLocaleString()}
-                  </span>
+                <div className="flex items-center justify-end">
                   <button
                     onClick={() => {
                       addToCart(product);
@@ -127,7 +128,7 @@ export const ProductDetailPopup = ({ product, onClose }: ProductDetailPopupProps
                 </div>
 
                 {product.specifications && (
-                  <div className="space-y-2">
+                  <div className="space-y-2 mt-4">
                     <h3 className="font-semibold text-gray-900">Specifications</h3>
                     <div className="grid grid-cols-2 gap-2 text-sm">
                       {Object.entries(product.specifications).map(([key, value]) => (
