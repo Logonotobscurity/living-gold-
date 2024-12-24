@@ -10,6 +10,7 @@ interface CartContextType {
   items: CartItem[];
   totalItems: number;
   totalPrice: number;
+  showCartNotification: boolean;
   addToCart: (product: Product) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
@@ -35,6 +36,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     const savedItems = localStorage.getItem('cart');
     return savedItems ? JSON.parse(savedItems) : [];
   });
+  const [showCartNotification, setShowCartNotification] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(items));
@@ -55,6 +57,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       }
       return [...currentItems, { product, quantity: 1 }];
     });
+    setShowCartNotification(true);
+    setTimeout(() => setShowCartNotification(false), 2000);
   };
 
   const removeFromCart = (productId: string) => {
@@ -82,6 +86,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         items,
         totalItems,
         totalPrice,
+        showCartNotification,
         addToCart,
         removeFromCart,
         updateQuantity,
