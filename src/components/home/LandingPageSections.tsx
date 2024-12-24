@@ -59,7 +59,7 @@ const deals = [
     title: "Special Deals",
     description: "Exclusive offers on premium lighting fixtures",
     icon: Gift,
-    bgColor: "from-gold-600 to-amber-500",
+    bgColor: "from-gold-500 to-gold-600",
     link: "/products?filter=deals"
   }
 ];
@@ -83,7 +83,7 @@ export const LandingPageSections = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="flex flex-col items-center text-center p-6 bg-white rounded-xl border border-gold-500/20 hover:border-gold-500/50 shadow-lg hover:shadow-xl transition-all"
+                className="flex flex-col items-center text-center p-6 bg-white rounded-xl border border-gold-400/20 hover:border-gold-400/50 shadow-lg hover:shadow-xl transition-all"
               >
                 <feature.icon className="w-10 h-10 text-gold-500 mb-4" />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.title}</h3>
@@ -229,7 +229,7 @@ export const LandingPageSections = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-gold-600 via-gold-500 to-gold-600 rounded-2xl overflow-hidden shadow-xl"
+            className="bg-gradient-to-r from-gold-500 via-gold-400 to-gold-500 rounded-2xl overflow-hidden shadow-xl"
           >
             <div className="relative px-6 py-16 md:p-16">
               <div className="relative z-10 max-w-3xl mx-auto text-center">
@@ -242,7 +242,7 @@ export const LandingPageSections = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     to="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white text-gold-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg"
+                    className="inline-flex items-center justify-center gap-2 bg-white text-gold-500 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg"
                   >
                     <Phone className="w-5 h-5" />
                     Contact Sales
