@@ -2,16 +2,13 @@ export interface Product {
   id: string;
   name: string;
   description: string;
+  price: number;
+  imageUrl: string;
   category: string;
-  image: string;
-  features: string[];
-  availability: 'in-stock' | 'pre-order';
-  dimensions: {
-    width: number;
-    height: number;
-    depth: number;
-  };
-  price?: number;
+  rating?: number;
+  stock?: number;
+  features?: string[];
+  specifications?: Record<string, string>;
 }
 
 export interface CartItem {
