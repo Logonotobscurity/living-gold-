@@ -2,8 +2,8 @@ export interface Product {
   id: string;
   name: string;
   description: string;
-  imageUrl: string;
   category: string;
+  imageUrl: string;
   specifications?: {
     [key: string]: string;
   };

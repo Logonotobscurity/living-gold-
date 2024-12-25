@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useMemo, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { ProductCard } from '../components/product/ProductCard';
 import { ProductDetailPopup } from '../components/product/ProductDetailPopup';
 import { Product } from '../types';
@@ -9,6 +10,7 @@ import { products } from '../data/products';
 export const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const category = searchParams.get('category');
 
@@ -20,17 +22,13 @@ export const Products = () => {
 
   // Filter and deduplicate products
   const filteredProducts = useMemo(() => {
-    // First, filter by category if selected
     let filtered = category ? products.filter(product => product.category === category) : products;
-    
-    // Then deduplicate based on product ID
     const uniqueProducts = new Map();
     filtered.forEach(product => {
       if (!uniqueProducts.has(product.id)) {
         uniqueProducts.set(product.id, product);
       }
     });
-    
     return Array.from(uniqueProducts.values());
   }, [category]);
 
@@ -40,12 +38,10 @@ export const Products = () => {
     } else {
       setSearchParams({});
     }
-    // Close any open product popup when changing categories
     setSelectedProduct(null);
   };
 
   const handleProductClick = (product: Product) => {
-    // Ensure we're not selecting the same product multiple times
     if (selectedProduct?.id !== product.id) {
       setSelectedProduct(product);
     }
@@ -53,6 +49,13 @@ export const Products = () => {
 
   const handleClosePopup = () => {
     setSelectedProduct(null);
+  };
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (containerRef.current) {
+      const scrollAmount = direction === 'left' ? -300 : 300;
+      containerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -102,11 +105,49 @@ export const Products = () => {
           </p>
         </motion.div>
 
+        {/* Mobile Carousel View */}
+        <div className="block md:hidden">
+          <div className="flex items-center justify-end mb-4">
+            <div className="flex gap-2">
+              <button
+                onClick={() => scroll('left')}
+                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => scroll('right')}
+                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+          <div
+            ref={containerRef}
+            className="overflow-x-auto scrollbar-hide -mx-4 px-4"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            <div className="flex gap-4">
+              {filteredProducts.map((product, index) => (
+                <div key={`${product.id}-${index}`} className="flex-shrink-0 w-[250px]">
+                  <ProductCard
+                    product={product}
+                    onClick={() => handleProductClick(product)}
+                    delay={index * 0.1}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Grid View */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
         >
           {filteredProducts.map((product, index) => (
             <ProductCard
@@ -135,7 +176,7 @@ export const Products = () => {
       {/* Product Detail Popup */}
       {selectedProduct && (
         <ProductDetailPopup
-          key={selectedProduct.id} // Force remount on product change
+          key={selectedProduct.id}
           product={selectedProduct}
           isOpen={true}
           onClose={handleClosePopup}
