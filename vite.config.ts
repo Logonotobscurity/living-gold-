@@ -5,11 +5,8 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  base: './',
   publicDir: 'public',
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
   server: {
     port: 3001,
     host: true,
@@ -32,12 +29,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'ui-vendor': ['framer-motion', 'lucide-react'],
         },
-        assetFileNames: 'assets/[name].[hash].[ext]',
-        chunkFileNames: 'assets/[name].[hash].js',
-        entryFileNames: 'assets/[name].[hash].js',
       },
     },
-    assetsInlineLimit: 4096,
-    chunkSizeWarningLimit: 1500,
   },
 });
