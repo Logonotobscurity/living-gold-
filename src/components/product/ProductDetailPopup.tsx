@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Share2, Heart, MessageCircle } from 'lucide-react';
+import { X, Share2, Heart, MessageCircle, ShoppingCart, Check } from 'lucide-react';
 import { Product } from '../../types';
+import { useCart } from '../../context/CartContext';
 
 interface ProductDetailPopupProps {
   product: Product;
@@ -10,9 +11,19 @@ interface ProductDetailPopupProps {
 }
 
 export const ProductDetailPopup = ({ product, isOpen, onClose }: ProductDetailPopupProps) => {
+  const { addToCart } = useCart();
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [showShareTooltip, setShowShareTooltip] = useState(false);
   const [selectedImage, setSelectedImage] = useState(product.imageUrl);
+
+  const features = [
+    'Premium quality materials',
+    'Professional installation available',
+    'Energy-efficient design',
+    'Modern and elegant style',
+    '2-year warranty',
+    'After-sales support'
+  ];
 
   const handleShare = async (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -36,10 +47,15 @@ export const ProductDetailPopup = ({ product, isOpen, onClose }: ProductDetailPo
   };
 
   const handleWhatsApp = () => {
-    const message = `Hi, I'm interested in the ${product.name}. Can you provide more information?`;
+    const message = `Hi, I'm interested in the ${product.name}. Could you please provide more information about:\n\n- Price and availability\n- Installation services\n- Delivery options\n\nThank you!`;
     const whatsappNumber = '2348123456789'; // Replace with your WhatsApp number
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
+  };
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart(product);
   };
 
   const toggleWishlist = (e: React.MouseEvent) => {
@@ -114,13 +130,26 @@ export const ProductDetailPopup = ({ product, isOpen, onClose }: ProductDetailPo
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">{product.name}</h2>
                 <p className="text-gray-600 mb-6">{product.description}</p>
 
+                {/* Key Features */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Key Features</h3>
+                  <ul className="space-y-2">
+                    {features.map((feature, index) => (
+                      <li key={index} className="flex items-center gap-2 text-gray-600">
+                        <Check className="w-4 h-4 text-gold-500" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
                 {/* Specifications */}
                 {product.specifications && Object.keys(product.specifications).length > 0 && (
                   <div className="mb-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">Specifications</h3>
-                    <div className="space-y-2">
+                    <div className="grid grid-cols-1 gap-2">
                       {Object.entries(product.specifications).map(([key, value]) => (
-                        <div key={key} className="flex justify-between text-sm">
+                        <div key={key} className="flex justify-between py-2 border-b border-gray-100">
                           <span className="text-gray-600">{key}</span>
                           <span className="text-gray-900 font-medium">{value}</span>
                         </div>
@@ -129,14 +158,23 @@ export const ProductDetailPopup = ({ product, isOpen, onClose }: ProductDetailPo
                   </div>
                 )}
 
-                {/* WhatsApp Button */}
-                <button
-                  onClick={handleWhatsApp}
-                  className="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
-                >
-                  <MessageCircle className="w-5 h-5" />
-                  Chat on WhatsApp
-                </button>
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-3">
+                  <button
+                    onClick={handleAddToCart}
+                    className="w-full bg-gold-500 hover:bg-gold-600 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                    Add to Cart
+                  </button>
+                  <button
+                    onClick={handleWhatsApp}
+                    className="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Chat on WhatsApp
+                  </button>
+                </div>
               </div>
             </div>
           </motion.div>

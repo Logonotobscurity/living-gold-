@@ -5,7 +5,7 @@ export const products: Product[] = [
     id: '1',
     name: 'Crystal Chandelier',
     description: 'Elegant crystal chandelier with modern design',
-    category: 'Chandeliers',
+    category: 'Luxury Lighting',
     imageUrl: 'IMG_2106.WEBP',
     specifications: {
       'Material': 'Crystal, Metal',
@@ -18,7 +18,7 @@ export const products: Product[] = [
     id: '2',
     name: 'Wall Sconce',
     description: 'Contemporary wall sconce with gold finish',
-    category: 'Wall Lights',
+    category: 'Wall Lighting',
     imageUrl: 'IMG_2107.WEBP',
     specifications: {
       'Material': 'Metal',
@@ -31,7 +31,7 @@ export const products: Product[] = [
     id: '3',
     name: 'Pendant Light',
     description: 'Modern pendant light with adjustable height',
-    category: 'Pendant Lights',
+    category: 'Modern Collection',
     imageUrl: 'IMG_2094.WEBP',
     specifications: {
       'Material': 'Metal, Glass',
@@ -44,7 +44,7 @@ export const products: Product[] = [
     id: '4',
     name: 'Table Lamp',
     description: 'Decorative table lamp with fabric shade',
-    category: 'Table Lamps',
+    category: 'Decorative Lighting',
     imageUrl: 'IMG_2089.WEBP',
     specifications: {
       'Material': 'Metal, Fabric',
@@ -57,7 +57,7 @@ export const products: Product[] = [
     id: '5',
     name: 'Floor Lamp',
     description: 'Contemporary floor lamp with reading light',
-    category: 'Floor Lamps',
+    category: 'Floor Lighting',
     imageUrl: 'IMG_2090.WEBP',
     specifications: {
       'Material': 'Metal',
@@ -70,7 +70,7 @@ export const products: Product[] = [
     id: '6',
     name: 'LED Chandelier',
     description: 'Modern LED chandelier with remote control',
-    category: 'Chandeliers',
+    category: 'Smart Lighting',
     imageUrl: 'IMG_2091.WEBP',
     specifications: {
       'Material': 'Metal, Acrylic',
@@ -83,7 +83,7 @@ export const products: Product[] = [
     id: '7',
     name: 'Bathroom Light',
     description: 'Waterproof bathroom light fixture',
-    category: 'Wall Lights',
+    category: 'Bathroom Lighting',
     imageUrl: 'IMG_2092.WEBP',
     specifications: {
       'Material': 'Metal, Glass',
@@ -96,7 +96,7 @@ export const products: Product[] = [
     id: '8',
     name: 'Kitchen Light',
     description: 'Under cabinet LED lighting system',
-    category: 'Pendant Lights',
+    category: 'Kitchen Lighting',
     imageUrl: 'IMG_2093.WEBP',
     specifications: {
       'Type': 'LED Strip',
@@ -109,7 +109,7 @@ export const products: Product[] = [
     id: '9',
     name: 'Desk Lamp',
     description: 'Adjustable desk lamp with USB port',
-    category: 'Table Lamps',
+    category: 'Smart Lighting',
     imageUrl: 'IMG_2095.WEBP',
     specifications: {
       'Material': 'Metal',
@@ -122,7 +122,7 @@ export const products: Product[] = [
     id: '10',
     name: 'Garden Light',
     description: 'Solar-powered garden light set',
-    category: 'Outdoor Lights',
+    category: 'Outdoor Lighting',
     imageUrl: 'IMG_2096.WEBP',
     specifications: {
       'Power': 'Solar',
@@ -135,7 +135,7 @@ export const products: Product[] = [
     id: '11',
     name: 'Modern Chandelier',
     description: 'Contemporary design with geometric patterns',
-    category: 'Chandeliers',
+    category: 'Modern Collection',
     imageUrl: 'IMG_1937.WEBP',
     specifications: {
       'Material': 'Metal',
@@ -148,7 +148,7 @@ export const products: Product[] = [
     id: '12',
     name: 'Vintage Wall Light',
     description: 'Classic design with antique finish',
-    category: 'Wall Lights',
+    category: 'Vintage Collection',
     imageUrl: 'IMG_1938.WEBP',
     specifications: {
       'Material': 'Brass',
@@ -161,7 +161,7 @@ export const products: Product[] = [
     id: '13',
     name: 'Track Lighting',
     description: 'Adjustable track lighting system',
-    category: 'Ceiling Lights',
+    category: 'Modern Collection',
     imageUrl: 'IMG_1941.WEBP',
     specifications: {
       'Type': 'Track System',
@@ -174,7 +174,7 @@ export const products: Product[] = [
     id: '14',
     name: 'Bedside Lamp',
     description: 'Modern bedside lamp with touch control',
-    category: 'Table Lamps',
+    category: 'Bedroom Lighting',
     imageUrl: 'IMG_1942.WEBP',
     specifications: {
       'Material': 'Metal, Glass',
@@ -187,7 +187,7 @@ export const products: Product[] = [
     id: '15',
     name: 'Ceiling Fan Light',
     description: 'Modern ceiling fan with integrated LED light',
-    category: 'Ceiling Lights',
+    category: 'Smart Lighting',
     imageUrl: 'IMG_1943.WEBP',
     specifications: {
       'Material': 'Metal',
@@ -200,7 +200,7 @@ export const products: Product[] = [
     id: '16',
     name: 'Art Deco Wall Sconce',
     description: 'Elegant wall sconce with art deco design',
-    category: 'Wall Lights',
+    category: 'Vintage Collection',
     imageUrl: 'IMG_1944.WEBP',
     specifications: {
       'Material': 'Metal, Glass',
@@ -213,7 +213,7 @@ export const products: Product[] = [
     id: '17',
     name: 'Modern Wall Light',
     description: 'Contemporary wall light with minimalist design',
-    category: 'Wall Lights',
+    category: 'Modern Collection',
     imageUrl: 'IMG_1945.WEBP',
     specifications: {
       'Material': 'Metal',
@@ -226,7 +226,7 @@ export const products: Product[] = [
     id: '18',
     name: 'Designer Wall Sconce',
     description: 'Designer wall sconce with unique pattern',
-    category: 'Wall Lights',
+    category: 'Luxury Lighting',
     imageUrl: 'IMG_1946.WEBP',
     specifications: {
       'Material': 'Metal, Crystal',
@@ -239,7 +239,7 @@ export const products: Product[] = [
     id: '19',
     name: 'LED Wall Light',
     description: 'Modern LED wall light with ambient glow',
-    category: 'Wall Lights',
+    category: 'Smart Lighting',
     imageUrl: 'IMG_1947.WEBP',
     specifications: {
       'Type': 'LED',
@@ -252,7 +252,7 @@ export const products: Product[] = [
     id: '20',
     name: 'Crystal Wall Light',
     description: 'Luxurious crystal wall light with elegant design',
-    category: 'Wall Lights',
+    category: 'Luxury Lighting',
     imageUrl: 'IMG_1948.WEBP',
     specifications: {
       'Material': 'Crystal, Metal',
@@ -265,7 +265,7 @@ export const products: Product[] = [
     id: '21',
     name: 'Geometric Pendant',
     description: 'Modern geometric pendant light',
-    category: 'Pendant Lights',
+    category: 'Modern Collection',
     imageUrl: 'IMG_1949.WEBP',
     specifications: {
       'Material': 'Metal',
@@ -278,7 +278,7 @@ export const products: Product[] = [
     id: '22',
     name: 'Classic Chandelier',
     description: 'Traditional crystal chandelier with timeless appeal',
-    category: 'Chandeliers',
+    category: 'Luxury Lighting',
     imageUrl: 'IMG_1950.WEBP',
     specifications: {
       'Material': 'Crystal, Brass',
@@ -291,7 +291,7 @@ export const products: Product[] = [
     id: '23',
     name: 'Modern Globe Light',
     description: 'Contemporary globe pendant with glass shade',
-    category: 'Pendant Lights',
+    category: 'Modern Collection',
     imageUrl: 'IMG_1951.WEBP',
     specifications: {
       'Material': 'Glass, Metal',
@@ -304,7 +304,7 @@ export const products: Product[] = [
     id: '24',
     name: 'Vintage Sconce',
     description: 'Vintage-inspired wall sconce with brass finish',
-    category: 'Wall Lights',
+    category: 'Vintage Collection',
     imageUrl: 'IMG_1952.WEBP',
     specifications: {
       'Material': 'Brass',
@@ -317,7 +317,7 @@ export const products: Product[] = [
     id: '25',
     name: 'LED Ceiling Light',
     description: 'Modern LED ceiling light with slim profile',
-    category: 'Ceiling Lights',
+    category: 'Smart Lighting',
     imageUrl: 'IMG_1953.WEBP',
     specifications: {
       'Type': 'LED',
@@ -330,7 +330,7 @@ export const products: Product[] = [
     id: '26',
     name: 'Crystal Drop Light',
     description: 'Elegant crystal drop pendant light',
-    category: 'Pendant Lights',
+    category: 'Luxury Lighting',
     imageUrl: 'IMG_1954.WEBP',
     specifications: {
       'Material': 'Crystal',
@@ -343,7 +343,7 @@ export const products: Product[] = [
     id: '27',
     name: 'Contemporary Sconce',
     description: 'Modern wall sconce with unique design',
-    category: 'Wall Lights',
+    category: 'Modern Collection',
     imageUrl: 'IMG_1955.WEBP',
     specifications: {
       'Material': 'Metal',
@@ -356,7 +356,7 @@ export const products: Product[] = [
     id: '28',
     name: 'Crystal Pendant',
     description: 'Modern crystal pendant with clean lines',
-    category: 'Pendant Lights',
+    category: 'Luxury Lighting',
     imageUrl: 'IMG_1956.WEBP',
     specifications: {
       'Material': 'Crystal, Chrome',
@@ -369,7 +369,7 @@ export const products: Product[] = [
     id: '29',
     name: 'Glass Pendant Light',
     description: 'Contemporary glass pendant with unique shape',
-    category: 'Pendant Lights',
+    category: 'Modern Collection',
     imageUrl: 'IMG_1957.WEBP',
     specifications: {
       'Material': 'Glass',
@@ -382,7 +382,7 @@ export const products: Product[] = [
     id: '30',
     name: 'Modern Pendant',
     description: 'Sleek modern pendant with metallic finish',
-    category: 'Pendant Lights',
+    category: 'Modern Collection',
     imageUrl: 'IMG_1958.WEBP',
     specifications: {
       'Material': 'Metal',
