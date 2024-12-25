@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Lightbulb, 
   Settings, 
   Wrench, 
-  Zap, 
-  Shield, 
-  Clock, 
   CheckCircle,
-  ArrowRight,
   CreditCard,
   Truck,
   PlusCircle,
@@ -204,7 +200,7 @@ export const Services = () => {
                 <ul className="space-y-3">
                   {service.features.map((feature, i) => (
                     <motion.li
-                      key={i}
+                      key={feature}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 }}
@@ -340,7 +336,7 @@ export const Services = () => {
           <div className="max-w-3xl mx-auto">
             {faqs.map((faq, index) => (
               <motion.div
-                key={index}
+                key={faq.question}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

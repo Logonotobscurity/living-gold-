@@ -33,9 +33,12 @@ export interface WishlistContextType {
 export interface ProductCardProps {
   product: Product;
   className?: string;
+  onClick?: () => void;
+  delay?: number;
 }
 
 export interface ProductDetailPopupProps {
   product: Product;
+  isOpen: boolean;
   onClose: () => void;
 } 

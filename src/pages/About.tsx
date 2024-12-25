@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, Users, Globe, Lightbulb, ArrowRight, Star } from 'lucide-react';
+import { Award, Users, Globe, Lightbulb, ArrowRight, Star, Heart, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PageHero } from '../components/common/PageHero';
 
@@ -10,6 +10,13 @@ export const About = () => {
     animate: { opacity: 1, y: 0 },
     transition: { duration: 0.5 }
   };
+
+  const stats = [
+    { label: 'Years of Experience', value: '25+' },
+    { label: 'Happy Customers', value: '10K+' },
+    { label: 'Products', value: '500+' },
+    { label: 'Cities Served', value: '50+' }
+  ];
 
   return (
     <div className="min-h-screen">
@@ -73,6 +80,16 @@ export const About = () => {
                     icon: <Globe className="w-6 h-6" />,
                     title: 'Global Reach',
                     description: 'Serving customers worldwide'
+                  },
+                  {
+                    icon: <Heart className="w-6 h-6" />,
+                    title: 'Customer First',
+                    description: 'Dedicated to your satisfaction'
+                  },
+                  {
+                    icon: <Shield className="w-6 h-6" />,
+                    title: 'Trusted Service',
+                    description: 'Reliable and professional support'
                   }
                 ].map((feature, index) => (
                   <motion.div
@@ -97,57 +114,43 @@ export const About = () => {
               variants={fadeInUp}
               className="relative"
             >
-              <div className="relative aspect-square rounded-2xl overflow-hidden">
-                <img 
-                  src="/images/about-mission.jpg" 
-                  alt="Our Mission"
+              <div className="aspect-square rounded-2xl overflow-hidden">
+                <img
+                  src="/images/about/showroom.jpg"
+                  alt="Our Showroom"
                   className="w-full h-full object-cover"
                 />
-                {/* Image overlay with gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
               </div>
-              {/* Decorative elements */}
-              <motion.div
-                className="absolute -right-4 -bottom-4 w-24 h-24 border-2 border-gold-500 rounded-xl"
-                animate={{
-                  rotate: [0, 90, 0],
-                }}
-                transition={{
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
+              
+              {/* Stats overlay */}
+              <div className="absolute -bottom-10 left-10 right-10">
+                <div className="bg-white rounded-xl shadow-xl p-6 grid grid-cols-2 gap-6">
+                  {stats.map((stat, index) => (
+                    <div key={stat.label} className="text-center">
+                      <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.1 }}
+                        className="text-2xl font-bold text-gold-500"
+                      >
+                        {stat.value}
+                      </motion.p>
+                      <p className="text-sm text-gray-600">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Values Section */}
-      <section className="py-24 bg-gray-900 text-white relative overflow-hidden">
-        {/* Animated background pattern */}
+      <section className="py-24 bg-gray-900 relative overflow-hidden">
+        {/* Animated background */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 opacity-10">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 bg-gold-500 rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  scale: [1, 1.5, 1],
-                  opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 2,
-                }}
-              />
-            ))}
-          </div>
+          <div className="absolute inset-0 bg-[url('/patterns/circuit-board.svg')] bg-repeat opacity-5"></div>
         </div>
 
         <div className="container mx-auto px-4 relative">
@@ -157,7 +160,7 @@ export const About = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-4">Our Values</h2>
+            <h2 className="text-4xl font-bold mb-4 text-white">Our Values</h2>
             <div className="w-20 h-1 bg-gold-500 mx-auto" />
           </motion.div>
 
@@ -191,7 +194,7 @@ export const About = () => {
                 <div className="w-16 h-16 rounded-xl bg-gold-500/10 flex items-center justify-center text-gold-500 mb-6 group-hover:bg-gold-500 group-hover:text-white transition-colors">
                   {value.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-4 group-hover:text-gold-400 transition-colors">{value.title}</h3>
+                <h3 className="text-xl font-bold mb-4 text-white group-hover:text-gold-400 transition-colors">{value.title}</h3>
                 <p className="text-gray-400">{value.description}</p>
               </motion.div>
             ))}

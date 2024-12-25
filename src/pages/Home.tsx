@@ -158,30 +158,34 @@ export const Home = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredCategories.map((category) => (
-              <motion.div
+              <Link
                 key={category}
-                whileHover={{ y: -5 }}
-                className="relative group cursor-pointer"
-                onClick={() => setActiveCategory(category)}
+                to={`/products?category=${encodeURIComponent(category)}`}
+                className="block"
               >
-                <div className="relative h-80 rounded-lg overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10" />
-                  <img
-                    src={`/images/products/${productsByCategory[category]?.[0]?.imageUrl}`}
-                    alt={category}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
-                    <h3 className="text-xl font-semibold mb-2">{category}</h3>
-                    <p className="text-sm text-gray-200 mb-4">
-                      {productsByCategory[category]?.length} Products
-                    </p>
-                    <span className="inline-flex items-center text-sm font-medium text-white hover:text-gold-200">
-                      Explore Collection <ChevronRight className="w-4 h-4 ml-1" />
-                    </span>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="relative group cursor-pointer"
+                >
+                  <div className="relative h-80 rounded-lg overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10" />
+                    <img
+                      src={`/images/products/${productsByCategory[category]?.[0]?.imageUrl}`}
+                      alt={category}
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
+                      <h3 className="text-xl font-semibold mb-2">{category}</h3>
+                      <p className="text-sm text-gray-200 mb-4">
+                        {productsByCategory[category]?.length} Products
+                      </p>
+                      <span className="inline-flex items-center text-sm font-medium text-white hover:text-gold-200">
+                        Explore Collection <ChevronRight className="w-4 h-4 ml-1" />
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>

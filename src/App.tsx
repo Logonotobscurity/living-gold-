@@ -1,29 +1,24 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Layout } from './components/layout/Layout';
-import { Home } from './pages/Home';
-import { Products } from './pages/Products';
-import { About } from './pages/About';
-import { Contact } from './pages/Contact';
-import { Services } from './pages/Services';
-import { CartPage } from './pages/CartPage';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Navbar } from './components/common/Navbar';
+import { Footer } from './components/common/Footer';
+import { AppRoutes } from './routes';
 import { CartProvider } from './context/CartContext';
+import { WishlistProvider } from './context/WishlistContext';
 
-export const App: React.FC = () => {
+export const App = () => {
   return (
-    <CartProvider>
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/cart" element={<CartPage />} />
-          </Routes>
-        </Layout>
-      </Router>
-    </CartProvider>
+    <Router>
+      <CartProvider>
+        <WishlistProvider>
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-grow">
+              <AppRoutes />
+            </main>
+            <Footer />
+          </div>
+        </WishlistProvider>
+      </CartProvider>
+    </Router>
   );
 };

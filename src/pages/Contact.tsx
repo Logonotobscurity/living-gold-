@@ -1,44 +1,92 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Send, Instagram, Facebook } from 'lucide-react';
-import { socialLinks } from '../types';
+import { Phone, Mail, MapPin, Send, Instagram, Facebook, Loader2 } from 'lucide-react';
 import { PageHero } from '../components/common/PageHero';
 
 export const Contact = () => {
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
-  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const [formState, setFormState] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormStatus('sending');
-    
+    setIsSubmitting(true);
     // Simulate form submission
-    setTimeout(() => {
-      setFormStatus('sent');
-      setTimeout(() => setFormStatus('idle'), 3000);
-    }, 1500);
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setIsSubmitting(false);
+    // Reset form
+    setFormState({
+      name: '',
+      email: '',
+      phone: '',
+      message: ''
+    });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormState(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
   return (
     <div className="min-h-screen">
       <PageHero 
-        title="Get in Touch"
-        subtitle="We'd love to hear from you"
-        height="small"
+        title="Contact Us"
+        subtitle="Get in touch with our lighting experts"
+        height="medium"
       />
 
       {/* Contact Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            {/* Contact Info */}
+      <section className="py-24 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white">
+          <div className="absolute inset-0">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-gold-300 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.1, 0.3, 0.1],
+                }}
+                transition={{
+                  duration: 2 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="container mx-auto px-4 relative">
+          <div className="grid md:grid-cols-2 gap-16">
+            {/* Contact Information */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              className="space-y-8"
             >
-              <h2 className="text-3xl font-bold mb-8">Contact Information</h2>
-              <div className="space-y-6 mb-12">
+              <div>
+                <h2 className="text-3xl font-bold mb-2">Let's Connect</h2>
+                <div className="w-20 h-1 bg-gold-500 mb-6" />
+                <p className="text-gray-600 text-lg">
+                  Have questions about our products or services? We're here to help.
+                </p>
+              </div>
+
+              <div className="space-y-6">
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-gold-100 rounded-lg text-gold-500">
                     <Phone className="w-6 h-6" />
@@ -46,13 +94,14 @@ export const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Phone</h3>
                     <a 
-                      href={socialLinks.whatsapp}
+                      href="tel:+2348012345678"
                       className="text-gray-600 hover:text-gold-500 transition-colors"
                     >
-                      +1 234 567 890
+                      +234 801 234 5678
                     </a>
                   </div>
                 </div>
+
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-gold-100 rounded-lg text-gold-500">
                     <Mail className="w-6 h-6" />
@@ -60,13 +109,14 @@ export const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
                     <a 
-                      href={socialLinks.email}
+                      href="mailto:info@livinggold.com"
                       className="text-gray-600 hover:text-gold-500 transition-colors"
                     >
                       info@livinggold.com
                     </a>
                   </div>
                 </div>
+
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-gold-100 rounded-lg text-gold-500">
                     <MapPin className="w-6 h-6" />
@@ -74,9 +124,9 @@ export const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Location</h3>
                     <p className="text-gray-600">
-                      Building materials,<br />
-                      Okpanam, Asaba,<br />
-                      Nigeria 320107
+                      Living Gold Lighting,<br />
+                      Okpanam Road, Asaba,<br />
+                      Delta State, Nigeria
                     </p>
                   </div>
                 </div>
@@ -87,7 +137,7 @@ export const Contact = () => {
                 <h3 className="font-semibold mb-4">Follow Us</h3>
                 <div className="flex gap-4">
                   <a
-                    href={socialLinks.instagram}
+                    href="https://instagram.com/livinggold"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 bg-gray-100 rounded-lg text-gray-600 hover:bg-gold-100 hover:text-gold-500 transition-colors"
@@ -95,7 +145,7 @@ export const Contact = () => {
                     <Instagram className="w-6 h-6" />
                   </a>
                   <a
-                    href={socialLinks.facebook}
+                    href="https://facebook.com/livinggold"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-3 bg-gray-100 rounded-lg text-gray-600 hover:bg-gold-100 hover:text-gold-500 transition-colors"
@@ -111,10 +161,8 @@ export const Contact = () => {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="bg-white rounded-2xl shadow-lg p-8"
+              className="bg-white rounded-2xl shadow-xl p-8"
             >
-              <h2 className="text-3xl font-bold mb-8">Send us a Message</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -123,10 +171,15 @@ export const Contact = () => {
                   <input
                     type="text"
                     id="name"
+                    name="name"
+                    value={formState.name}
+                    onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all"
+                    placeholder="Your name"
                   />
                 </div>
+
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                     Email
@@ -134,46 +187,63 @@ export const Contact = () => {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    value={formState.email}
+                    onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all"
+                    placeholder="your@email.com"
                   />
                 </div>
+
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                    Phone
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formState.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all"
+                    placeholder="Your phone number"
+                  />
+                </div>
+
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                     Message
                   </label>
                   <textarea
                     id="message"
+                    name="message"
+                    value={formState.message}
+                    onChange={handleChange}
                     required
                     rows={4}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-colors"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-all resize-none"
+                    placeholder="How can we help you?"
                   />
                 </div>
-                <motion.button
+
+                <button
                   type="submit"
-                  disabled={formStatus !== 'idle'}
-                  className={`w-full flex items-center justify-center gap-2 py-3 px-6 rounded-lg text-white transition-colors ${
-                    formStatus === 'idle'
-                      ? 'bg-gold-500 hover:bg-gold-600'
-                      : formStatus === 'sent'
-                      ? 'bg-green-500'
-                      : formStatus === 'error'
-                      ? 'bg-red-500'
-                      : 'bg-gold-400'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting}
+                  className="w-full bg-gold-500 text-white py-3 px-6 rounded-lg hover:bg-gold-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {formStatus === 'idle' && (
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
                     <>
                       <Send className="w-5 h-5" />
                       Send Message
                     </>
                   )}
-                  {formStatus === 'sending' && 'Sending...'}
-                  {formStatus === 'sent' && 'Message Sent!'}
-                  {formStatus === 'error' && 'Error Sending Message'}
-                </motion.button>
+                </button>
               </form>
             </motion.div>
           </div>
