@@ -195,5 +195,200 @@ export const products: Product[] = [
       'Light': 'Integrated LED',
       'Remote Control': 'Yes'
     }
+  },
+  {
+    id: '16',
+    name: 'Art Deco Wall Sconce',
+    description: 'Elegant wall sconce with art deco design',
+    category: 'Wall Lights',
+    imageUrl: 'IMG_1944.WEBP',
+    specifications: {
+      'Material': 'Metal, Glass',
+      'Style': 'Art Deco',
+      'Finish': 'Brushed Gold',
+      'Installation': 'Wall Mounted'
+    }
+  },
+  {
+    id: '17',
+    name: 'Modern Wall Light',
+    description: 'Contemporary wall light with minimalist design',
+    category: 'Wall Lights',
+    imageUrl: 'IMG_1945.WEBP',
+    specifications: {
+      'Material': 'Metal',
+      'Style': 'Modern',
+      'Finish': 'Matte Black',
+      'Light Direction': 'Adjustable'
+    }
+  },
+  {
+    id: '18',
+    name: 'Designer Wall Sconce',
+    description: 'Designer wall sconce with unique pattern',
+    category: 'Wall Lights',
+    imageUrl: 'IMG_1946.WEBP',
+    specifications: {
+      'Material': 'Metal, Crystal',
+      'Style': 'Designer',
+      'Finish': 'Chrome',
+      'Features': 'Pattern Shadow'
+    }
+  },
+  {
+    id: '19',
+    name: 'LED Wall Light',
+    description: 'Modern LED wall light with ambient glow',
+    category: 'Wall Lights',
+    imageUrl: 'IMG_1947.WEBP',
+    specifications: {
+      'Type': 'LED',
+      'Style': 'Contemporary',
+      'Color': 'Warm White',
+      'Power': '12W'
+    }
+  },
+  {
+    id: '20',
+    name: 'Crystal Wall Light',
+    description: 'Luxurious crystal wall light with elegant design',
+    category: 'Wall Lights',
+    imageUrl: 'IMG_1948.WEBP',
+    specifications: {
+      'Material': 'Crystal, Metal',
+      'Style': 'Luxury',
+      'Finish': 'Chrome',
+      'Crystal Type': 'K9'
+    }
+  },
+  {
+    id: '21',
+    name: 'Geometric Pendant',
+    description: 'Modern geometric pendant light',
+    category: 'Pendant Lights',
+    imageUrl: 'IMG_1949.WEBP',
+    specifications: {
+      'Material': 'Metal',
+      'Style': 'Geometric',
+      'Finish': 'Black',
+      'Height': 'Adjustable'
+    }
+  },
+  {
+    id: '22',
+    name: 'Classic Chandelier',
+    description: 'Traditional crystal chandelier with timeless appeal',
+    category: 'Chandeliers',
+    imageUrl: 'IMG_1950.WEBP',
+    specifications: {
+      'Material': 'Crystal, Brass',
+      'Style': 'Traditional',
+      'Tiers': '2',
+      'Finish': 'Antique Brass'
+    }
+  },
+  {
+    id: '23',
+    name: 'Modern Globe Light',
+    description: 'Contemporary globe pendant with glass shade',
+    category: 'Pendant Lights',
+    imageUrl: 'IMG_1951.WEBP',
+    specifications: {
+      'Material': 'Glass, Metal',
+      'Style': 'Modern',
+      'Shape': 'Globe',
+      'Glass': 'Frosted'
+    }
+  },
+  {
+    id: '24',
+    name: 'Vintage Sconce',
+    description: 'Vintage-inspired wall sconce with brass finish',
+    category: 'Wall Lights',
+    imageUrl: 'IMG_1952.WEBP',
+    specifications: {
+      'Material': 'Brass',
+      'Style': 'Vintage',
+      'Finish': 'Aged Brass',
+      'Shade': 'Glass'
+    }
+  },
+  {
+    id: '25',
+    name: 'LED Ceiling Light',
+    description: 'Modern LED ceiling light with slim profile',
+    category: 'Ceiling Lights',
+    imageUrl: 'IMG_1953.WEBP',
+    specifications: {
+      'Type': 'LED',
+      'Style': 'Modern',
+      'Profile': 'Ultra Slim',
+      'Dimmable': 'Yes'
+    }
+  },
+  {
+    id: '26',
+    name: 'Crystal Drop Light',
+    description: 'Elegant crystal drop pendant light',
+    category: 'Pendant Lights',
+    imageUrl: 'IMG_1954.WEBP',
+    specifications: {
+      'Material': 'Crystal',
+      'Style': 'Elegant',
+      'Drop Length': 'Adjustable',
+      'Crystal Type': 'Premium'
+    }
+  },
+  {
+    id: '27',
+    name: 'Contemporary Sconce',
+    description: 'Modern wall sconce with unique design',
+    category: 'Wall Lights',
+    imageUrl: 'IMG_1955.WEBP',
+    specifications: {
+      'Material': 'Metal',
+      'Style': 'Contemporary',
+      'Finish': 'Brushed Nickel',
+      'Light Direction': 'Up & Down'
+    }
+  },
+  {
+    id: '28',
+    name: 'Crystal Pendant',
+    description: 'Modern crystal pendant with clean lines',
+    category: 'Pendant Lights',
+    imageUrl: 'IMG_1956.WEBP',
+    specifications: {
+      'Material': 'Crystal, Chrome',
+      'Style': 'Modern',
+      'Light Output': 'Brilliant',
+      'Installation': 'Ceiling'
+    }
+  },
+  {
+    id: '29',
+    name: 'Glass Pendant Light',
+    description: 'Contemporary glass pendant with unique shape',
+    category: 'Pendant Lights',
+    imageUrl: 'IMG_1957.WEBP',
+    specifications: {
+      'Material': 'Glass',
+      'Style': 'Contemporary',
+      'Glass Type': 'Hand-blown',
+      'Shape': 'Unique'
+    }
+  },
+  {
+    id: '30',
+    name: 'Modern Pendant',
+    description: 'Sleek modern pendant with metallic finish',
+    category: 'Pendant Lights',
+    imageUrl: 'IMG_1958.WEBP',
+    specifications: {
+      'Material': 'Metal',
+      'Style': 'Modern',
+      'Finish': 'Metallic',
+      'Design': 'Minimalist'
+    }
   }
 ];
