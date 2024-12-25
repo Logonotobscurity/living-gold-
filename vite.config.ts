@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { type RollupOutput } from 'rollup';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,16 +30,17 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'ui-vendor': ['framer-motion', 'lucide-react'],
         },
-        assetFileNames: (assetInfo) => {
-          let extType = assetInfo.name.split('.').at(1);
+        assetFileNames: (assetInfo: any) => {
+          const info = assetInfo.name.split('.');
+          const extType = info[info.length - 1];
           if (/png|jpe?g|svg|gif|tiff|bmp|ico|webp/i.test(extType)) {
-            extType = 'img';
+            return `assets/img/[name]-[hash][extname]`;
           }
           return `assets/${extType}/[name]-[hash][extname]`;
         },
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
-      },
+      } as RollupOutput['output'],
     },
   },
 });
