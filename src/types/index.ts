@@ -4,8 +4,9 @@ export interface Product {
   description: string;
   imageUrl: string;
   category: string;
-  features?: string[];
-  specifications?: Record<string, string>;
+  specifications?: {
+    [key: string]: string;
+  };
 }
 
 export interface CartItem {
@@ -13,18 +14,28 @@ export interface CartItem {
   quantity: number;
 }
 
-export interface SocialLinks {
-  facebook: string;
-  instagram: string;
-  whatsapp: string;
-  email: string;
-  phone: string;
-  address: string;
+export interface CartContextType {
+  items: CartItem[];
+  addToCart: (product: Product) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
+  clearCart: () => void;
+  showCartNotification: boolean;
 }
 
-export const socialLinks = {
-  instagram: 'https://www.instagram.com/living.gold.global?igsh=aWF2ZHNoZjdtNXFz',
-  facebook: '#',
-  whatsapp: 'https://wa.me/+2348033129388',
-  email: 'mailto:logooluwamayowa@protonmail.com'
-} as const; 
+export interface WishlistContextType {
+  items: Product[];
+  addToWishlist: (product: Product) => void;
+  removeFromWishlist: (productId: string) => void;
+  isInWishlist: (productId: string) => boolean;
+}
+
+export interface ProductCardProps {
+  product: Product;
+  className?: string;
+}
+
+export interface ProductDetailPopupProps {
+  product: Product;
+  onClose: () => void;
+} 

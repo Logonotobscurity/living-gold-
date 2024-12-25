@@ -52,7 +52,7 @@ const deals = [
     title: "New Arrivals",
     description: "Discover our latest collection of luxury lighting",
     icon: ShoppingBag,
-    bgColor: "from-purple-600 to-blue-600",
+    bgColor: "from-gold-400 to-gold-500",
     link: "/products?sort=newest"
   },
   {
@@ -90,7 +90,7 @@ export const LandingPageSections = () => {
                   pointerEvents: activeFeature === index ? 'auto' : 'none',
                 }}
                 transition={{ duration: 0.5 }}
-                className="absolute inset-0 flex flex-col items-center text-center p-6 bg-white rounded-xl border border-gold-400/20 shadow-lg"
+                className="absolute inset-0 flex flex-col items-center text-center p-6 bg-white rounded-xl border border-gold-200 shadow-lg"
               >
                 <feature.icon className="w-12 h-12 text-gold-500 mb-4" />
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
@@ -220,7 +220,7 @@ export const LandingPageSections = () => {
               {[...testimonials, ...testimonials].map((testimonial, index) => (
                 <motion.div
                   key={`${testimonial.name}-${index}`}
-                  className="flex-shrink-0 w-[300px] sm:w-[350px] p-6 bg-white rounded-xl border border-gold-400/20 shadow-lg"
+                  className="flex-shrink-0 w-[300px] sm:w-[350px] p-6 bg-white rounded-xl border border-gold-200 shadow-lg"
                 >
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
@@ -259,7 +259,7 @@ export const LandingPageSections = () => {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
                     to="/contact"
-                    className="inline-flex items-center justify-center gap-2 bg-white text-gold-500 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg"
+                    className="inline-flex items-center justify-center gap-2 bg-white text-gold-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors shadow-lg"
                   >
                     <Phone className="w-5 h-5" />
                     Contact Sales

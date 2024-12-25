@@ -42,10 +42,6 @@ export const ProductCard = ({ product, className = '' }: ProductCardProps) => {
     setIsWishlisted(!isWishlisted);
   };
 
-  const imagePath = product.imageUrl.startsWith('IMG_') 
-    ? `/images/products/${product.imageUrl}`
-    : product.imageUrl;
-
   return (
     <motion.div
       whileHover={{ y: -5 }}
@@ -53,7 +49,7 @@ export const ProductCard = ({ product, className = '' }: ProductCardProps) => {
     >
       <div className="aspect-square overflow-hidden relative">
         <img
-          src={imagePath}
+          src={`/images/products/${product.imageUrl}`}
           alt={product.name}
           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
           onError={(e) => {
@@ -98,7 +94,7 @@ export const ProductCard = ({ product, className = '' }: ProductCardProps) => {
           className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors"
         >
           <Heart
-            className={`w-4 h-4 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'}`}
+            className={`w-4 h-4 ${isWishlisted ? 'fill-gold-500 text-gold-500' : 'text-gray-600'}`}
           />
         </button>
       </div>

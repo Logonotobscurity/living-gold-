@@ -24,6 +24,7 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: false,
     minify: 'terser',
+    copyPublicDir: true,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -34,7 +35,7 @@ export default defineConfig({
           const info = assetInfo.name.split('.');
           const extType = info[info.length - 1];
           if (/png|jpe?g|svg|gif|tiff|bmp|ico|webp/i.test(extType)) {
-            return `assets/img/[name]-[hash][extname]`;
+            return `assets/img/[name][extname]`;
           }
           return `assets/${extType}/[name]-[hash][extname]`;
         },

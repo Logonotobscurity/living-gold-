@@ -8,16 +8,16 @@ export default {
     extend: {
       colors: {
         gold: {
-          50: '#FFF9E5',
-          100: '#FFF2CC',
-          200: '#FFE699',
-          300: '#FFD966',
-          400: '#FFCD33',
-          500: '#FFB800',
-          600: '#CC9900',
-          700: '#997300',
-          800: '#664D00',
-          900: '#332600'
+          50: '#FFFDF5',
+          100: '#FDF6D8',
+          200: '#FCE9A1',
+          300: '#FBDC69',
+          400: '#FAD032',
+          500: '#D4AF37',  // Classic Gold
+          600: '#B8860B',  // Dark Goldenrod
+          700: '#996515',  // Golden Brown
+          800: '#7B4F1B',  // Dark Golden
+          900: '#5C3A11'   // Deep Golden Brown
         },
       },
       animation: {
