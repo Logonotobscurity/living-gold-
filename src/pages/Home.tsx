@@ -1,14 +1,111 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Star, ChevronRight, ChevronLeft, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { ArrowRight, Star, Sparkles, Zap } from 'lucide-react';
+import { ProductCard } from '../components/product/ProductCard';
 import { products } from '../data/products';
-import { ProductDetailPopup } from '../components/product/ProductDetailPopup';
 import { Product } from '../types';
+import { HelpCTA } from '../components/cta/HelpCTA';
+import { AutoSlideSection } from '../components/home/AutoSlideSection';
+
+const heroSlides = [
+  {
+    id: 1,
+    title: "Luxury Lighting Solutions",
+    subtitle: "Illuminate with Elegance",
+    description: "Transform your space with our exquisite collection of premium lighting fixtures.",
+    image: "/images/hero/luxury-chandelier.jpg",
+    gradient: "from-black/5 via-gold-100/30 to-white/50",
+    accent: "text-gold-600",
+    textColor: "text-gray-900",
+    glowColor: "gold",
+    buttonColor: "bg-gold-600 hover:bg-gold-700",
+    icon: Sparkles
+  },
+  {
+    id: 2,
+    title: "Modern Collection",
+    subtitle: "Contemporary Brilliance",
+    description: "Discover sleek, innovative designs that define modern living spaces.",
+    image: "/images/hero/modern-lighting.jpg",
+    gradient: "from-black/5 via-gray-800/40 to-white/50",
+    accent: "text-gray-800",
+    textColor: "text-gray-900",
+    glowColor: "gray",
+    buttonColor: "bg-gray-800 hover:bg-gray-900",
+    icon: Star
+  },
+  {
+    id: 3,
+    title: "Smart Lighting",
+    subtitle: "Future of Illumination",
+    description: "Experience intelligent lighting solutions for the modern home.",
+    image: "/images/hero/smart-lighting.jpg",
+    gradient: "from-black/5 via-indigo-600/30 to-white/50",
+    accent: "text-indigo-600",
+    textColor: "text-gray-900",
+    glowColor: "indigo",
+    buttonColor: "bg-indigo-600 hover:bg-indigo-700",
+    icon: Zap
+  }
+];
+
+const categories = [
+  {
+    id: 'luxury',
+    title: 'Luxury Lighting',
+    gradient: 'from-gold-100 to-amber-50',
+  },
+  {
+    id: 'modern',
+    title: 'Modern Collection',
+    gradient: 'from-gray-100 to-slate-50',
+  },
+  {
+    id: 'smart',
+    title: 'Smart Lighting',
+    gradient: 'from-blue-50 to-indigo-50',
+  }
+];
 
 export const Home = () => {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Slower auto-advance carousel
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (!isTransitioning) {
+        setIsTransitioning(true);
+        setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+        setTimeout(() => setIsTransitioning(false), 1000);
+      }
+    }, 8000); // Increased interval
+    return () => clearInterval(timer);
+  }, [isTransitioning]);
+
+  const slideVariants = {
+    enter: {
+      opacity: 0,
+      scale: 1.1,
+    },
+    center: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 1.2,
+        ease: [0.4, 0, 0.2, 1]
+      }
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.9,
+      transition: {
+        duration: 1.2,
+        ease: [0.4, 0, 0.2, 1]
+      }
+    }
+  };
 
   // Group products by category
   const productsByCategory = products.reduce((acc, product) => {
@@ -17,275 +114,254 @@ export const Home = () => {
     }
     acc[product.category].push(product);
     return acc;
-  }, {} as Record<string, typeof products>);
-
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
-  };
-
-  const staggerChildren = {
-    animate: {
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  // Featured categories to highlight
-  const featuredCategories = ['Luxury Lighting', 'Modern Collection', 'Smart Lighting'];
+  }, {} as Record<string, Product[]>);
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[85vh] bg-gradient-to-br from-gold-50 to-gold-100 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-[url('/patterns/circuit-board.svg')] bg-repeat opacity-20"></div>
-        </div>
-
-        {/* Content Container */}
-        <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
-          <motion.div
-            initial="initial"
-            animate="animate"
-            variants={staggerChildren}
-            className="max-w-3xl"
-          >
-            {/* Subtitle */}
-            <motion.div
-              variants={fadeInUp}
-              className="flex items-center gap-2 mb-6"
-            >
-              <div className="flex items-center">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    className="w-5 h-5 text-gold-500 fill-gold-500"
-                  />
-                ))}
-              </div>
-              <span className="text-gray-600">Premium Quality Lighting Solutions</span>
-            </motion.div>
-
-            {/* Main Heading */}
-            <motion.h1
-              variants={fadeInUp}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6"
-            >
-              Illuminate Your Space with{' '}
-              <span className="text-gold-600">Elegance</span>
-            </motion.h1>
-
-            {/* Description */}
-            <motion.p
-              variants={fadeInUp}
-              className="text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed"
-            >
-              Transform your home with our exquisite collection of modern and classic lighting fixtures. 
-              From crystal chandeliers to smart LED solutions, discover lighting that perfectly 
-              balances form and function.
-            </motion.p>
-
-            {/* CTA Buttons */}
-            <motion.div
-              variants={fadeInUp}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <Link
-                to="/products"
-                className="inline-flex items-center justify-center px-8 py-4 bg-gold-500 text-white rounded-lg font-semibold shadow-lg hover:bg-gold-600 transition-colors group"
-              >
-                Explore Collection
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <a
-                href="#featured"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-900 text-gray-900 rounded-lg font-semibold hover:bg-gray-900 hover:text-white transition-colors"
-              >
-                View Featured
-              </a>
-            </motion.div>
-          </motion.div>
-
-          {/* Decorative Elements */}
-          <motion.div
-            className="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 h-2/3 hidden lg:block"
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="relative w-full h-full">
+      <section className="relative h-[60vh] overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 opacity-20">
+            {[...Array(5)].map((_, i) => (
               <motion.div
-                className="absolute inset-0 bg-gold-200 rounded-l-full opacity-20"
+                key={i}
+                className={`absolute w-48 h-48 rounded-full bg-${heroSlides[currentSlide].glowColor}-300 mix-blend-multiply filter blur-3xl`}
                 animate={{
-                  scale: [1, 1.05, 1],
-                  rotate: [0, 5, 0]
+                  x: [Math.random() * 100, Math.random() * 100],
+                  y: [Math.random() * 100, Math.random() * 100],
+                  scale: [1, 1.2, 1],
                 }}
                 transition={{
                   duration: 8,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  repeatType: "reverse",
+                  ease: "easeInOut",
+                  delay: i * 0.5,
+                }}
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
                 }}
               />
-              <motion.div
-                className="absolute inset-0 bg-gold-300 rounded-l-full opacity-20 transform -translate-x-8"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  rotate: [0, -5, 0]
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
+            ))}
+          </div>
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentSlide}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="absolute inset-0"
+          >
+            {/* Slide Background */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] ease-out"
+              style={{ backgroundImage: `url(${heroSlides[currentSlide].image})` }}
+            >
+              <div className={`absolute inset-0 bg-gradient-to-r ${heroSlides[currentSlide].gradient}`} />
+            </div>
+
+            {/* Slide Content */}
+            <div className="relative h-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+              <div className="max-w-lg relative">
+                {/* Sparking Icon Animation */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                  className="flex items-center gap-3 mb-4"
+                >
+                  <motion.div
+                    className="relative"
+                    animate={{
+                      rotate: [0, 5, -5, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    {React.createElement(heroSlides[currentSlide].icon, {
+                      className: `w-6 h-6 ${heroSlides[currentSlide].accent} filter drop-shadow-lg`
+                    })}
+                    {/* Sparks */}
+                    {[...Array(3)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className={`absolute w-1 h-1 rounded-full bg-${heroSlides[currentSlide].glowColor}-400`}
+                        animate={{
+                          scale: [0, 1, 0],
+                          opacity: [0, 1, 0],
+                          x: [0, (i - 1) * 10],
+                          y: [0, (i - 1) * -10],
+                        }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          delay: i * 0.2,
+                          ease: "easeOut",
+                        }}
+                        style={{
+                          top: "50%",
+                          left: "50%",
+                        }}
+                      />
+                    ))}
+                  </motion.div>
+                  <span className={`text-base font-medium ${heroSlides[currentSlide].accent}`}>
+                    {heroSlides[currentSlide].subtitle}
+                  </span>
+                </motion.div>
+
+                {/* Title with Sparking Text */}
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className={`text-4xl sm:text-5xl font-bold ${heroSlides[currentSlide].textColor} mb-6 relative`}
+                >
+                  {heroSlides[currentSlide].title}
+                  <motion.span
+                    className={`absolute -right-4 -top-4 w-8 h-8 rounded-full bg-${heroSlides[currentSlide].glowColor}-400/30 blur-sm`}
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.3, 0.7, 0.3],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+                </motion.h1>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, duration: 0.8 }}
+                  className="text-lg text-gray-600 mb-8"
+                >
+                  {heroSlides[currentSlide].description}
+                </motion.p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9, duration: 0.8 }}
+                  className="flex flex-col sm:flex-row items-center gap-4"
+                >
+                  <Link
+                    to="/products"
+                    className={`inline-flex items-center px-6 py-3 ${heroSlides[currentSlide].buttonColor} text-white rounded-lg font-semibold 
+                      transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5`}
+                  >
+                    Explore Collection
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+
+                  {/* Nationwide Delivery Tag */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 1.1, duration: 0.8 }}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur border border-${heroSlides[currentSlide].glowColor}-200 shadow-[0_0_15px_rgba(0,0,0,0.1)]`}
+                  >
+                    <div className={`w-1.5 h-1.5 rounded-full bg-${heroSlides[currentSlide].glowColor}-500 animate-pulse`} />
+                    <span className={`text-xs font-medium ${heroSlides[currentSlide].accent}`}>
+                      Nationwide Delivery
+                    </span>
+                  </motion.div>
+                </motion.div>
+              </div>
             </div>
           </motion.div>
-        </div>
-      </section>
+        </AnimatePresence>
 
-      {/* Featured Categories Section */}
-      <section className="py-16 bg-white" id="featured">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Featured Collections</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Explore our carefully curated collections of premium lighting solutions
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredCategories.map((category) => (
-              <Link
-                key={category}
-                to={`/products?category=${encodeURIComponent(category)}`}
-                className="block"
-              >
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  className="relative group cursor-pointer"
-                >
-                  <div className="relative h-80 rounded-lg overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10" />
-                    <img
-                      src={`/images/products/${productsByCategory[category]?.[0]?.imageUrl}`}
-                      alt={category}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
-                      <h3 className="text-xl font-semibold mb-2">{category}</h3>
-                      <p className="text-sm text-gray-200 mb-4">
-                        {productsByCategory[category]?.length} Products
-                      </p>
-                      <span className="inline-flex items-center text-sm font-medium text-white hover:text-gold-200">
-                        Explore Collection <ChevronRight className="w-4 h-4 ml-1" />
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              </Link>
+        {/* Slide Progress Indicator */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+          <div className="flex gap-2">
+            {heroSlides.map((_, index) => (
+              <motion.button
+                key={index}
+                onClick={() => {
+                  if (!isTransitioning) {
+                    setIsTransitioning(true);
+                    setCurrentSlide(index);
+                    setTimeout(() => setIsTransitioning(false), 1000);
+                  }
+                }}
+                className={`h-1 rounded-full transition-all duration-500 ${
+                  index === currentSlide 
+                    ? `w-8 bg-${heroSlides[currentSlide].glowColor}-500` 
+                    : 'w-2 bg-gray-300 hover:bg-gray-400'
+                }`}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Product Grid Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {Object.entries(productsByCategory).map(([category, categoryProducts]) => (
-            <div key={category} className="mb-16">
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-2xl font-bold text-gray-900">{category}</h2>
-                <Link
-                  to={`/products?category=${category}`}
-                  className="text-gold-600 hover:text-gold-700 font-medium flex items-center"
-                >
-                  View All <ChevronRight className="w-5 h-5 ml-1" />
-                </Link>
-              </div>
+      {/* Recently Viewed Section */}
+      <AutoSlideSection />
 
-              {/* Desktop Grid */}
-              <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
-                {categoryProducts.slice(0, 4).map((product) => (
-                  <motion.div
-                    key={product.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -5 }}
-                    className="bg-white rounded-lg shadow-sm overflow-hidden group cursor-pointer"
-                    onClick={() => setSelectedProduct(product)}
+      {/* Categories Section */}
+      <section className="py-12 sm:py-20 bg-gradient-to-b from-white via-gray-50 to-white">
+        <div className="container mx-auto px-4">
+          {categories.map((category) => {
+            const categoryProducts = productsByCategory[category.title] || [];
+            return (
+              <motion.div
+                key={category.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8 }}
+                className="mb-16 last:mb-0"
+              >
+                <div className="flex items-center justify-between mb-8">
+                  <motion.h2 
+                    className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600"
+                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, x: -20 }}
                   >
-                    <div className="aspect-square relative overflow-hidden">
-                      <img
-                        src={`/images/products/${product.imageUrl}`}
-                        alt={product.name}
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <button className="bg-white text-gray-900 px-4 py-2 rounded-lg flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                          <Eye className="w-4 h-4" />
-                          Quick View
-                        </button>
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-medium text-gray-900 group-hover:text-gold-600 transition-colors">
-                        {product.name}
-                      </h3>
-                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                        {product.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Mobile Carousel */}
-              <div className="md:hidden relative">
-                <div className="overflow-x-auto scrollbar-hide -mx-4 px-4 flex gap-4 snap-x snap-mandatory">
-                  {categoryProducts.map((product) => (
-                    <div
+                    {category.title}
+                  </motion.h2>
+                  <Link
+                    to={`/products?category=${category.title}`}
+                    className="text-gold-600 hover:text-gold-700 font-medium flex items-center gap-1 group"
+                  >
+                    View Collection
+                    <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                  {categoryProducts.slice(0, 4).map((product, productIndex) => (
+                    <motion.div
                       key={product.id}
-                      className="flex-shrink-0 w-64 snap-start"
-                      onClick={() => setSelectedProduct(product)}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: productIndex * 0.1, duration: 0.5 }}
+                      className="aspect-[3/4] sm:aspect-[4/5]"
                     >
-                      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                        <div className="aspect-square relative">
-                          <img
-                            src={`/images/products/${product.imageUrl}`}
-                            alt={product.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="p-4">
-                          <h3 className="font-medium text-gray-900">{product.name}</h3>
-                          <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                            {product.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                      <ProductCard product={product} />
+                    </motion.div>
                   ))}
                 </div>
-              </div>
-            </div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </section>
 
-      {/* Product Detail Popup */}
-      <AnimatePresence>
-        {selectedProduct && (
-          <ProductDetailPopup
-            product={selectedProduct}
-            isOpen={true}
-            onClose={() => setSelectedProduct(null)}
-          />
-        )}
-      </AnimatePresence>
+      <HelpCTA />
     </div>
   );
 };

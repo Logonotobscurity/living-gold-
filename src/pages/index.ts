@@ -1,6 +1,7 @@
 export { Home } from './Home';
-export { About } from './About';
-export { Services } from './Services';
 export { Products } from './Products';
+export { About } from './About';
 export { Contact } from './Contact';
-export { Checkout } from './Checkout'; 
+export { Services } from './Services';
+export { Checkout } from './Checkout';
+export { CartPage } from './CartPage'; 

@@ -4,8 +4,13 @@ export interface Product {
   description: string;
   category: string;
   imageUrl: string;
-  specifications?: {
-    [key: string]: string;
+  features: string[];
+  specifications: string[];
+  availability: 'in-stock' | 'out-of-stock' | 'pre-order';
+  dimensions?: {
+    width: number;
+    height: number;
+    depth: number;
   };
 }
 
@@ -20,7 +25,8 @@ export interface CartContextType {
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
-  showCartNotification: boolean;
+  isInCart: (productId: string) => boolean;
+  totalItems: number;
 }
 
 export interface WishlistContextType {

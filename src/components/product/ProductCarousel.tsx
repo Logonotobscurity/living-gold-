@@ -1,93 +1,108 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { ProductCard } from './ProductCard';
 import type { Product } from '../../types';
 
 interface ProductCarouselProps {
+  title?: string;
   products: Product[];
 }
 
-export const ProductCarousel: React.FC<ProductCarouselProps> = ({ products }) => {
-  const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
-  const [key, setKey] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+export const ProductCarousel = ({ title, products }: ProductCarouselProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
 
-  // Function to preload images
-  const preloadImages = (productsToPreload: Product[]) => {
-    productsToPreload.forEach(product => {
-      const img = new Image();
-      img.src = `/images/products/${product.image}`;
-    });
+  const scroll = (direction: 'left' | 'right') => {
+    if (!containerRef.current) return;
+    
+    const container = containerRef.current;
+    const scrollAmount = direction === 'left' ? -container.offsetWidth : container.offsetWidth;
+    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   };
 
-  // Improved shuffle function that ensures no duplicates
-  const shuffleProducts = () => {
-    if (isTransitioning || products.length < 4) return;
-    
-    setIsTransitioning(true);
-    
-    // Get new products that aren't in the current selection
-    const availableProducts = products.filter(
-      product => !currentProducts.find(p => p.id === product.id)
-    );
-    
-    // If we don't have enough new products, reset the filter
-    const shufflePool = availableProducts.length < 4 ? products : availableProducts;
-    
-    const shuffled = [...shufflePool]
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 4);
-    
-    // Preload the next set of images
-    preloadImages(shuffled);
-    
-    setCurrentProducts(shuffled);
-    setKey(prev => prev + 1);
-    
-    // Reset transition state after animation
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, 500);
-  };
-
+  // Auto-scroll functionality
   useEffect(() => {
-    // Initial selection
-    if (products.length > 0 && currentProducts.length === 0) {
-      const initial = products.slice(0, 4);
-      setCurrentProducts(initial);
-      preloadImages(initial);
-      
-      // Preload the next set
-      const nextSet = products.slice(4, 8);
-      preloadImages(nextSet);
-    }
+    if (!autoScrollEnabled) return;
 
-    // Auto shuffle every 7 seconds
-    const interval = setInterval(shuffleProducts, 7000);
+    const interval = setInterval(() => {
+      scroll('right');
+    }, 5000); // Scroll every 5 seconds
+
     return () => clearInterval(interval);
-  }, [products]);
+  }, [autoScrollEnabled]);
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">
-          Featured Products
-        </h2>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={key}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {currentProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
+    <div className="relative py-6">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-100/50 via-blue-100/50 to-purple-100/50 overflow-hidden">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-gold-200/20 via-gold-400/20 to-gold-200/20"
+          animate={{
+            x: ['0%', '100%', '0%'],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+        />
       </div>
-    </section>
+
+      {/* Title Section */}
+      <div className="container mx-auto px-4 mb-4 relative">
+        <div className="flex items-center justify-between">
+          {title && (
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">{title}</h2>
+          )}
+          <div className="flex gap-2">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                scroll('left');
+                setAutoScrollEnabled(false);
+              }}
+              className="p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-md hover:bg-gold-50 transition-colors group"
+            >
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 group-hover:text-gold-600" />
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                scroll('right');
+                setAutoScrollEnabled(false);
+              }}
+              className="p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-md hover:bg-gold-50 transition-colors group"
+            >
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 group-hover:text-gold-600" />
+            </motion.button>
+          </div>
+        </div>
+      </div>
+
+      {/* Carousel */}
+      <div
+        ref={containerRef}
+        className="overflow-x-auto scrollbar-hide -mx-2 px-2 relative"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        onMouseEnter={() => setAutoScrollEnabled(false)}
+        onMouseLeave={() => setAutoScrollEnabled(true)}
+      >
+        <div className="flex gap-2 sm:gap-3 md:gap-4">
+          {products.map((product) => (
+            <motion.div
+              key={product.id}
+              className="flex-shrink-0 w-[130px] sm:w-[160px] md:w-[200px]"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              <ProductCard product={product} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }; 

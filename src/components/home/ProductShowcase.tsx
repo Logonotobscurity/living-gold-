@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
@@ -39,7 +39,7 @@ export const ProductShowcase = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   // Memoized callback for filtering products by category
-  const getCategoryProducts = useCallback((categoryName: CategoryType) => {
+  const getCategoryProducts = useCallback((categoryName: CategoryType): Product[] => {
     return products.filter(p => p.category === categoryName)
       .sort((a, b) => a.id.localeCompare(b.id));
   }, []);
@@ -114,14 +114,36 @@ export const ProductShowcase = () => {
                 </Link>
               </motion.div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                {categoryProducts.slice(0, 3).map((product, productIndex) => (
-                  <ProductCard
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
+                {categoryProducts.slice(0, 2).map((product, productIndex) => (
+                  <motion.div
                     key={product.id}
-                    product={product}
-                    onClick={() => handleProductClick(product)}
-                    delay={productIndex * 0.1}
-                  />
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: productIndex * 0.1 }}
+                    className="aspect-square"
+                  >
+                    <ProductCard
+                      product={product}
+                      onClick={() => handleProductClick(product)}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                {categoryProducts.slice(2, 6).map((product, productIndex) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: (productIndex + 2) * 0.1 }}
+                  >
+                    <ProductCard
+                      product={product}
+                      onClick={() => handleProductClick(product)}
+                    />
+                  </motion.div>
                 ))}
               </div>
             </div>

@@ -7,6 +7,16 @@ interface PerformanceMetrics {
   cls: number | null; // Cumulative Layout Shift
 }
 
+interface PerformanceEntryWithProcessing extends PerformanceEntry {
+  processingStart: number;
+  startTime: number;
+}
+
+interface LayoutShiftEntry extends PerformanceEntry {
+  hadRecentInput: boolean;
+  value: number;
+}
+
 export const usePerformance = (callback?: (metrics: PerformanceMetrics) => void) => {
   const metrics: PerformanceMetrics = {
     fcp: null,
@@ -43,7 +53,7 @@ export const usePerformance = (callback?: (metrics: PerformanceMetrics) => void)
     const fidObserver = new PerformanceObserver((entryList) => {
       const entries = entryList.getEntries();
       if (entries.length > 0) {
-        const firstEntry = entries[0];
+        const firstEntry = entries[0] as PerformanceEntryWithProcessing;
         reportMetric('fid', firstEntry.processingStart - firstEntry.startTime);
       }
     });
@@ -52,8 +62,9 @@ export const usePerformance = (callback?: (metrics: PerformanceMetrics) => void)
     const clsObserver = new PerformanceObserver((entryList) => {
       let clsValue = 0;
       for (const entry of entryList.getEntries()) {
-        if (!entry.hadRecentInput) {
-          clsValue += (entry as any).value;
+        const layoutShiftEntry = entry as LayoutShiftEntry;
+        if (!layoutShiftEntry.hadRecentInput) {
+          clsValue += layoutShiftEntry.value;
         }
       }
       reportMetric('cls', clsValue);

@@ -30,21 +30,23 @@ export const socialLinks: SocialLinks = {
 export interface Product {
   id: string;
   name: string;
-  description: string;
   category: string;
-  image: string;
-  gallery?: string[];
-  features: string[];
-  availability: 'in-stock' | 'pre-order' | 'out-of-stock';
-  dimensions: {
-    width: number;
-    height: number;
-    depth: number;
-  };
-  price: number;
+  description: string;
+  imageUrl: string;
+  specifications?: string[];
+  features?: string[];
+  price?: number;
+  availability?: 'in-stock' | 'pre-order' | 'out-of-stock';
 }
 
 export interface CartItem {
-  product: Product;
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  imageUrl: string;
+  specifications?: string[];
+  features?: string[];
+  price?: number;
   quantity: number;
 }

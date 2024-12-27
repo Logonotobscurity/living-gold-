@@ -1,8 +1,7 @@
-import React from 'react';
-import { LucideIcon } from 'lucide-react';
+import type { ReactNode } from 'react';
 
 interface ServiceCardProps {
-  icon: React.ReactNode;
+  icon: ReactNode;
   title: string;
   description: string;
 }

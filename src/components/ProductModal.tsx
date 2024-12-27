@@ -41,7 +41,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onC
               <Dialog.Panel className="mx-auto w-full max-w-2xl bg-white rounded-xl shadow-xl overflow-hidden">
                 <div className="relative">
                   <img 
-                    src={product.image} 
+                    src={product.imageUrl} 
                     alt={product.name}
                     className="w-full h-64 sm:h-80 object-cover"
                   />
@@ -68,7 +68,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onC
                     <div>
                       <h4 className="text-lg font-semibold text-luxury-black mb-2">Features</h4>
                       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {product.features.map((feature, index) => (
+                        {(product.features as string[]).map((feature, index) => (
                           <li key={index} className="flex items-center text-luxury-muted">
                             <span className="w-2 h-2 bg-gold-500 rounded-full mr-2"></span>
                             {feature}

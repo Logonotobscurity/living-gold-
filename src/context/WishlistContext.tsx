@@ -1,14 +1,15 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useCallback, useContext } from 'react';
 import { Product } from '../types';
 
 interface WishlistContextType {
   items: Product[];
-  addItem: (product: Product) => void;
-  removeItem: (productId: string) => void;
+  addToWishlist: (product: Product) => void;
+  removeFromWishlist: (productId: string) => void;
   isInWishlist: (productId: string) => boolean;
+  clearWishlist: () => void;
 }
 
-const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
+export const WishlistContext = createContext<WishlistContextType | null>(null);
 
 export const useWishlist = () => {
   const context = useContext(WishlistContext);
@@ -19,35 +20,37 @@ export const useWishlist = () => {
 };
 
 export const WishlistProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [items, setItems] = useState<Product[]>(() => {
-    const savedItems = localStorage.getItem('wishlist');
-    return savedItems ? JSON.parse(savedItems) : [];
-  });
+  const [items, setItems] = useState<Product[]>([]);
 
-  useEffect(() => {
-    localStorage.setItem('wishlist', JSON.stringify(items));
+  const addToWishlist = useCallback((product: Product) => {
+    setItems(currentItems => {
+      const exists = currentItems.some(item => item.id === product.id);
+      if (exists) {
+        return currentItems;
+      }
+      return [...currentItems, product];
+    });
+  }, []);
+
+  const removeFromWishlist = useCallback((productId: string) => {
+    setItems(currentItems => currentItems.filter(item => item.id !== productId));
+  }, []);
+
+  const isInWishlist = useCallback((productId: string) => {
+    return items.some(item => item.id === productId);
   }, [items]);
 
-  const addItem = (product: Product) => {
-    setItems((prevItems) => {
-      if (!prevItems.some((item) => item.id === product.id)) {
-        return [...prevItems, product];
-      }
-      return prevItems;
-    });
+  const clearWishlist = useCallback(() => {
+    setItems([]);
+  }, []);
+
+  const value = {
+    items,
+    addToWishlist,
+    removeFromWishlist,
+    isInWishlist,
+    clearWishlist,
   };
 
-  const removeItem = (productId: string) => {
-    setItems((prevItems) => prevItems.filter((item) => item.id !== productId));
-  };
-
-  const isInWishlist = (productId: string) => {
-    return items.some((item) => item.id === productId);
-  };
-
-  return (
-    <WishlistContext.Provider value={{ items, addItem, removeItem, isInWishlist }}>
-      {children}
-    </WishlistContext.Provider>
-  );
+  return <WishlistContext.Provider value={value}>{children}</WishlistContext.Provider>;
 }; 

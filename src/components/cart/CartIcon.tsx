@@ -3,8 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { useNavigate } from 'react-router-dom';
+import { routes } from '../../utils/routes';
 
-export const CartButton: React.FC = () => {
+export const CartIcon: React.FC = () => {
   const { items, showCartNotification } = useCart();
   const navigate = useNavigate();
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
@@ -13,28 +14,17 @@ export const CartButton: React.FC = () => {
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      onClick={() => navigate('/cart')}
-      className="relative p-2 hover:bg-gray-100/10 rounded-full transition-colors group"
+      onClick={() => navigate(routes.cart)}
+      className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
     >
-      <ShoppingCart className="w-6 h-6 text-white group-hover:text-gold-400 transition-colors relative z-10" />
-      <motion.div
-        className="absolute inset-0 bg-gold-500/20 rounded-lg opacity-0 group-hover:opacity-100"
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 1.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
+      <ShoppingCart className="w-6 h-6" />
       <AnimatePresence>
         {totalItems > 0 && (
           <motion.span
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            className="absolute -top-1 -right-1 bg-gold-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
+            className="absolute -top-1 -right-1 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"
           >
             {totalItems}
           </motion.span>

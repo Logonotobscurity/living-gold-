@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -6,39 +6,21 @@ import { Link } from 'react-router-dom';
 const categories = [
   {
     id: 1,
-    name: 'Chandeliers',
+    name: 'Luxury Lighting',
     image: '/images/products/IMG_2106.WEBP',
-    link: '/products?category=chandeliers',
+    link: '/products?category=luxury-lighting',
   },
   {
     id: 2,
-    name: 'Wall Lights',
+    name: 'Modern Collection',
     image: '/images/products/IMG_2107.WEBP',
-    link: '/products?category=wall-lights',
+    link: '/products?category=modern-collection',
   },
   {
     id: 3,
-    name: 'Pendant Lights',
+    name: 'Smart Lighting',
     image: '/images/products/IMG_2094.WEBP',
-    link: '/products?category=pendant-lights',
-  },
-  {
-    id: 4,
-    name: 'Table Lamps',
-    image: '/images/products/IMG_2089.WEBP',
-    link: '/products?category=table-lamps',
-  },
-  {
-    id: 5,
-    name: 'Floor Lamps',
-    image: '/images/products/IMG_2090.WEBP',
-    link: '/products?category=floor-lamps',
-  },
-  {
-    id: 6,
-    name: 'Outdoor Lights',
-    image: '/images/products/IMG_2091.WEBP',
-    link: '/products?category=outdoor-lights',
+    link: '/products?category=smart-lighting',
   },
 ];
 

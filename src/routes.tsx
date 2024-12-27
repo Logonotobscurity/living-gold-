@@ -1,18 +1,27 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Home, Products, About, Contact, Services, Checkout } from './pages';
+import { Home } from './pages/Home';
+import { About } from './pages/About';
+import { Products } from './pages/Products';
+import { Contact } from './pages/Contact';
+import { Services } from './pages/Services';
+import { CartPage } from './pages/CartPage';
+import { Checkout } from './pages/Checkout';
 
-export const AppRoutes = () => {
+interface AppRoutesProps {
+  onOpenCallPopup: () => void;
+}
+
+export const AppRoutes: React.FC<AppRoutesProps> = ({ onOpenCallPopup }) => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/products" element={<Products />} />
       <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
+      <Route path="/products" element={<Products />} />
       <Route path="/services" element={<Services />} />
+      <Route path="/contact" element={<Contact onOpenCallPopup={onOpenCallPopup} />} />
+      <Route path="/cart" element={<CartPage />} />
       <Route path="/checkout" element={<Checkout />} />
-      <Route path="/privacy" element={<div>Privacy Policy</div>} />
-      <Route path="/terms" element={<div>Terms of Service</div>} />
-      <Route path="/sitemap" element={<div>Sitemap</div>} />
     </Routes>
   );
 }; 
